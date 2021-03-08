@@ -25,7 +25,7 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 	public Collection<LoadSpec> findSupportedLoadSpecs(ByteProvider provider) throws IOException {
 		var result = new ArrayList<LoadSpec>();
 		try {
-			iBootVersion version = new iBootVersion(provider);
+			iBootInfo version = new iBootInfo(provider);
 			if (version.isSupported()) {
 				result.add(new LoadSpec(this, version.getBaseAddress(),
 						new LanguageCompilerSpecPair("", "default"), true));
