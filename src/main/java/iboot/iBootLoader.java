@@ -28,7 +28,8 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 			iBootInfo version = new iBootInfo(provider);
 			if (version.isSupported()) {
 				result.add(new LoadSpec(this, version.getBaseAddress(),
-						new LanguageCompilerSpecPair("", "default"), true));
+						new LanguageCompilerSpecPair("AARCH64:64:LE:V8A", "default"),
+							true));
 			}
 		} catch (InvalidInputException exception) {
 
