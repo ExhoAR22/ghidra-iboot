@@ -4,6 +4,7 @@ import ghidra.app.util.bin.ByteProvider;
 import ghidra.util.exception.InvalidInputException;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
 public class iBootInfo {
@@ -14,6 +15,10 @@ public class iBootInfo {
     private static final long VERSION_OFFSET = 0x280;
     private static final long VERSION_SIZE = 0x40;
     private static final String VERSION_PREFIX = "iBoot-";
+    private static final long BASE_ADDRESS_OFFSET_OLD = 0x318;
+    private static final long BASE_ADDRESS_OFFSET_NEW = 0x300;
+    private static final int BASE_ADDRESS_SIZE = 8;
+    private static final int NEW_VERSION = 6603;
 
     private static final String[] TYPES = new String[] {
             "SecureROM",
@@ -83,12 +88,18 @@ public class iBootInfo {
     private final String description;
     private final String edition;
     private final String version;
+    private final byte[] baseAddressArea;
 
     public iBootInfo(ByteProvider provider) throws IOException {
         this.description = new String(provider.readBytes(DESCRIPTION_OFFSET, DESCRIPTION_SIZE),
                 StandardCharsets.US_ASCII);
         this.edition = new String(provider.readBytes(EDITION_OFFSET, EDITION_LENGTH), StandardCharsets.US_ASCII);
         this.version = new String(provider.readBytes(VERSION_OFFSET, VERSION_SIZE), StandardCharsets.US_ASCII);
+
+        long minimalBaseAddressOffset = Math.min(BASE_ADDRESS_OFFSET_NEW, BASE_ADDRESS_OFFSET_OLD);
+        long maximalBaseAddressOffset = Math.max(BASE_ADDRESS_OFFSET_NEW, BASE_ADDRESS_OFFSET_OLD);
+        this.baseAddressArea = provider.readBytes(minimalBaseAddressOffset,
+                maximalBaseAddressOffset - minimalBaseAddressOffset + BASE_ADDRESS_SIZE);
     }
 
     public String getType() throws InvalidInputException {
@@ -123,7 +134,21 @@ public class iBootInfo {
         return this.version.substring(VERSION_PREFIX.length());
     }
 
+    public String getEdition() {
+        return this.edition;
+    }
+
     public long getBaseAddress() throws InvalidInputException {
-        return 0;
+        String versionString = this.getVersion();
+        if (versionString.contains(".")) {
+            versionString = versionString.split("\\.")[0];
+        }
+
+        if (Integer.parseInt(versionString) < NEW_VERSION) {
+            return new BigInteger(this.baseAddressArea, (int)(BASE_ADDRESS_OFFSET_OLD - BASE_ADDRESS_OFFSET_NEW),
+                    BASE_ADDRESS_SIZE).longValue();
+        } else {
+            return new BigInteger(this.baseAddressArea, 0, BASE_ADDRESS_SIZE).longValue();
+        }
     }
 }
