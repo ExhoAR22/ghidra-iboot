@@ -20,7 +20,7 @@ public class iBootInfo {
     private static final int BASE_ADDRESS_SIZE = 8;
     private static final int NEW_VERSION = 6603;
 
-    private static final String[] TYPES = new String[] {
+    private static final String[] STAGES = new String[] {
             "SecureROM",
             "LLB",
             "iBoot",
@@ -102,17 +102,17 @@ public class iBootInfo {
                 maximalBaseAddressOffset - minimalBaseAddressOffset + BASE_ADDRESS_SIZE);
     }
 
-    public String getType() throws InvalidInputException {
-        for (String type : TYPES) {
-            if (description.startsWith(type + " for ")) {
-                return type;
+    public String getStage() throws InvalidInputException {
+        for (String stage : STAGES) {
+            if (description.startsWith(stage + " for ")) {
+                return stage;
             }
         }
         throw new InvalidInputException();
     }
 
     public String getDevice() throws InvalidInputException {
-        String descriptionWithoutType = this.description.substring((this.getType() + " for ").length());
+        String descriptionWithoutType = this.description.substring((this.getStage() + " for ").length());
         return descriptionWithoutType.substring(0, descriptionWithoutType.indexOf(',')).toLowerCase();
     }
 
