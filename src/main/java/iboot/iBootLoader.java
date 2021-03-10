@@ -18,7 +18,7 @@ import ghidra.util.task.TaskMonitor;
 public class iBootLoader extends AbstractLibrarySupportLoader {
 	@Override
 	public String getName() {
-		return "iBoot";
+		return "iBoot Stage";
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 			iBootInfo version = new iBootInfo(provider);
 			if (version.isSupported()) {
 				result.add(new LoadSpec(this, version.getBaseAddress(),
-						new LanguageCompilerSpecPair("AARCH64:64:LE:V8A", "default"),
+						new LanguageCompilerSpecPair("AARCH64:LE:64:v8A", "default"),
 							true));
 			}
 		} catch (InvalidInputException exception) {
