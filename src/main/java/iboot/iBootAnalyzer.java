@@ -11,7 +11,8 @@ import ghidra.util.task.TaskMonitor;
 
 public class iBootAnalyzer extends AbstractAnalyzer {
 	public iBootAnalyzer() {
-		super("iBoot analyzer", "Does nothing at the moment", AnalyzerType.BYTE_ANALYZER);
+		super("iBoot Stage Analyzer", "Attempts to symbolize iBoot binaries",
+				AnalyzerType.FUNCTION_ANALYZER);
 	}
 
 	@Override
