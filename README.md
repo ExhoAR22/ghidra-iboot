@@ -3,5 +3,5 @@ Ghidra loader and analyzer for decrypted iBoot, LLB, iBEC, iBSS and SecureROM im
 
 ### Building
 ```shell
-GHIDRA_INSTALL_DIR=<ghidra-dir> gradle
+gradle -PGHIDRA_INSTALL_DIR=<ghidra-dir>
 ```
