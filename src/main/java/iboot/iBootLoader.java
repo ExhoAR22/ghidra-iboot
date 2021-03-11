@@ -9,8 +9,10 @@ import ghidra.app.util.importer.MessageLog;
 import ghidra.app.util.opinion.AbstractLibrarySupportLoader;
 import ghidra.app.util.opinion.LoadSpec;
 import ghidra.framework.model.DomainObject;
+import ghidra.program.flatapi.FlatProgramAPI;
 import ghidra.program.model.lang.LanguageCompilerSpecPair;
 import ghidra.program.model.listing.Program;
+import ghidra.program.model.mem.Memory;
 import ghidra.util.exception.CancelledException;
 import ghidra.util.exception.InvalidInputException;
 import ghidra.util.task.TaskMonitor;
@@ -40,6 +42,9 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 	@Override
 	protected void load(ByteProvider provider, LoadSpec loadSpec, List<Option> options,
 						Program program, TaskMonitor monitor, MessageLog log) throws CancelledException, IOException {
+		FlatProgramAPI flatProgramAPI = new FlatProgramAPI(program, monitor);
+		Memory memory = program.getMemory();
+		monitor.setMessage("Loading iBoot stage...");
 	}
 
 	@Override

@@ -11,4 +11,3 @@ if (ghidraInstallDir) {
 } else {
 	throw new GradleException("GHIDRA_INSTALL_DIR is not defined!")
 }
-
