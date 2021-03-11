@@ -34,7 +34,7 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 						true));
 			}
 		} catch (InvalidInputException exception) {
-
+			// The file is not an iBoot stage, and as such can't be loaded by this loader.
 		}
 		return result;
 	}
