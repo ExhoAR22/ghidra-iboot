@@ -9,10 +9,14 @@ import ghidra.app.util.importer.MessageLog;
 import ghidra.app.util.opinion.AbstractLibrarySupportLoader;
 import ghidra.app.util.opinion.LoadSpec;
 import ghidra.framework.model.DomainObject;
+import ghidra.framework.store.LockException;
 import ghidra.program.flatapi.FlatProgramAPI;
+import ghidra.program.model.address.Address;
 import ghidra.program.model.lang.LanguageCompilerSpecPair;
 import ghidra.program.model.listing.Program;
 import ghidra.program.model.mem.Memory;
+import ghidra.program.model.mem.MemoryBlock;
+import ghidra.program.model.mem.MemoryConflictException;
 import ghidra.util.exception.CancelledException;
 import ghidra.util.exception.InvalidInputException;
 import ghidra.util.task.TaskMonitor;
@@ -34,7 +38,7 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 						true));
 			}
 		} catch (InvalidInputException exception) {
-			// The file is not an iBoot stage, and as such can't be loaded by this loader.
+			// The binary is not an iBoot stage, and thus can't be loaded by this loader.
 		}
 		return result;
 	}
@@ -45,6 +49,17 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 		FlatProgramAPI flatProgramAPI = new FlatProgramAPI(program, monitor);
 		Memory memory = program.getMemory();
 		monitor.setMessage("Loading iBoot stage...");
+		try {
+			Address imageBase = program.getAddressFactory().getDefaultAddressSpace().getAddress(loadSpec.getDesiredImageBase());
+			MemoryBlock imageBlock = memory.createInitializedBlock("iBoot Image", imageBase, provider.length(), (byte) 0, monitor, false);
+			imageBlock.setRead(true);
+			imageBlock.setExecute(true);
+			memory.setBytes(imageBase, provider.readBytes(0, provider.length()));
+			flatProgramAPI.addEntryPoint(imageBase);
+			flatProgramAPI.disassemble(imageBase);
+		} catch (Exception exception) {
+			log.appendException(exception);
+		}
 	}
 
 	@Override
