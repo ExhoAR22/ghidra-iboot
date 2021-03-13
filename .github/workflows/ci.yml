@@ -20,9 +20,9 @@ jobs:
     - name: Install Ghidra
       run: |
         wget https://ghidra-sre.org/ghidra_9.2.2_PUBLIC_20201229.zip
-        sudo unzip ghidra_9.2.2_PUBLIC_20201229.zip
+        sudo unzip ghidra_9.2.2_PUBLIC_20201229.zip /opt
     - name: Build
-      run: GHIDRA_INSTALL_DIR=`pwd`/ghidra_9.2.2_PUBLIC_20201229 gradle
+      run: gradle -PGHIDRA_INSTALL_DIR=/opt/ghidra_9.2.2_PUBLIC_20201229
     - name: Upload JAR
       uses: actions/upload-artifact@v2.2.0
       with:

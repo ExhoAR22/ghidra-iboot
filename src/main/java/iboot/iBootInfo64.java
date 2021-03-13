@@ -103,10 +103,10 @@ public class iBootInfo64 {
         }
 
         if (Integer.parseInt(versionString) < NEW_VERSION) {
-            return new BigInteger(this.baseAddressArea, (int)(BASE_ADDRESS_OFFSET_OLD - BASE_ADDRESS_OFFSET_NEW),
-                    BASE_ADDRESS_SIZE).longValue();
+            return Utils.toLittleEndianLong(this.baseAddressArea,
+                    (int)(BASE_ADDRESS_OFFSET_OLD - BASE_ADDRESS_OFFSET_NEW), BASE_ADDRESS_SIZE);
         } else {
-            return new BigInteger(this.baseAddressArea, 0, BASE_ADDRESS_SIZE).longValue();
+            return Utils.toLittleEndianLong(this.baseAddressArea, 0, BASE_ADDRESS_SIZE);
         }
     }
 }

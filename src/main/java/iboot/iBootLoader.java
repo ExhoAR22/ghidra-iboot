@@ -9,14 +9,12 @@ import ghidra.app.util.importer.MessageLog;
 import ghidra.app.util.opinion.AbstractLibrarySupportLoader;
 import ghidra.app.util.opinion.LoadSpec;
 import ghidra.framework.model.DomainObject;
-import ghidra.framework.store.LockException;
 import ghidra.program.flatapi.FlatProgramAPI;
 import ghidra.program.model.address.Address;
 import ghidra.program.model.lang.LanguageCompilerSpecPair;
 import ghidra.program.model.listing.Program;
 import ghidra.program.model.mem.Memory;
 import ghidra.program.model.mem.MemoryBlock;
-import ghidra.program.model.mem.MemoryConflictException;
 import ghidra.util.exception.CancelledException;
 import ghidra.util.exception.InvalidInputException;
 import ghidra.util.task.TaskMonitor;
@@ -31,9 +29,9 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 	public Collection<LoadSpec> findSupportedLoadSpecs(ByteProvider provider) throws IOException {
 		var result = new ArrayList<LoadSpec>();
 		try {
-			iBootInfo64 version = new iBootInfo64(provider);
-			if (version.isSupported()) {
-				result.add(new LoadSpec(this, version.getBaseAddress(),
+			iBootInfo64 info = new iBootInfo64(provider);
+			if (info.isSupported()) {
+				result.add(new LoadSpec(this, info.getBaseAddress(),
 						new LanguageCompilerSpecPair("AARCH64:LE:64:v8A", "default"),
 						true));
 			}

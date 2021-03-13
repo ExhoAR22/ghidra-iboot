@@ -67,4 +67,8 @@ public class Consts {
             "s5l8950xsi", // A6
             "s5l8955xsi", // A6X
     };
+
+    private Consts() {
+        // To prevent instantiation
+    }
 }
