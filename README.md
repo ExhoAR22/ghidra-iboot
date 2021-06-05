@@ -1,5 +1,5 @@
 # iBoot extension for Ghidra
-Ghidra loader and analyzer for decrypted iBoot, LLB, iBEC, iBSS and SecureROM images
+Ghidra loader for decrypted iBoot, LLB, iBEC, iBSS and SecureROM images
 
 ### Building
 ```shell
