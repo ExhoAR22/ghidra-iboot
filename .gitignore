@@ -1,0 +1,15 @@
+# Artifacts
+build/
+dist/
+
+# IntelliJ IDEA
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Gradle
+.gradle/
+
+# macOS
+.DS_Store
