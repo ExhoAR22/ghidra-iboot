@@ -1,7 +1,9 @@
 package iboot;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import ghidra.app.util.Option;
 import ghidra.app.util.bin.ByteProvider;
@@ -34,8 +36,6 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 				result.add(new LoadSpec(this, info.getBaseAddress(),
 						new LanguageCompilerSpecPair("AARCH64:LE:64:v8A", "default"),
 						true));
-			} else {
-				// 32-bit iBoot images are not supported yet
 			}
 		} catch (InvalidInputException exception) {
 			// The binary is not an iBoot image, and thus can't be loaded by this loader.
@@ -45,7 +45,7 @@ public class iBootLoader extends AbstractLibrarySupportLoader {
 
 	@Override
 	protected void load(ByteProvider provider, LoadSpec loadSpec, List<Option> options,
-						Program program, TaskMonitor monitor, MessageLog log) throws CancelledException, IOException {
+						Program program, TaskMonitor monitor, MessageLog log) {
 		FlatProgramAPI flatProgramAPI = new FlatProgramAPI(program, monitor);
 		Memory memory = program.getMemory();
 		monitor.setMessage("Loading iBoot stage...");
