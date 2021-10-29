@@ -8,7 +8,9 @@ public class Consts {
             "LLB",
             "iBoot",
             "iBEC",
-            "iBSS"
+            "iBSS",
+            "iBootStage1",
+            "iBootStage2"
     };
 
     public static final String[] DEVICES_32BIT = new String[] {
