@@ -1,6 +1,6 @@
 package iboot;
 
-public class Utils {
+public final class Utils {
     private Utils() {
         // To prevent instantiation
     }

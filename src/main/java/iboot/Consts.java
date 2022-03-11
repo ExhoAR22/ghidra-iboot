@@ -1,6 +1,6 @@
 package iboot;
 
-public class Consts {
+public final class Consts {
     public static final String VERSION_PREFIX = "iBoot-";
 
     public static final String[] STAGES = new String[] {
