@@ -1,6 +1,6 @@
 package iboot;
 
-public class Consts {
+public final class Consts {
     public static final String VERSION_PREFIX = "iBoot-";
 
     public static final String[] STAGES = new String[] {
@@ -10,7 +10,8 @@ public class Consts {
             "iBEC",
             "iBSS",
             "iBootStage1",
-            "iBootStage2"
+            "iBootStage2",
+            "AVPBooter"
     };
 
     public static final String[] DEVICES_32BIT = new String[] {
