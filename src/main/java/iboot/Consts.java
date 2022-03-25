@@ -10,7 +10,8 @@ public final class Consts {
             "iBEC",
             "iBSS",
             "iBootStage1",
-            "iBootStage2"
+            "iBootStage2",
+            "AVPBooter"
     };
 
     public static final String[] DEVICES_32BIT = new String[] {
